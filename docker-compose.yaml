@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: class_password
+      POSTGRES_USER: classificator
+      POSTGRES_DB: layout_db
+
+    ports:
+      - "5432:5432"
+  django:
+    build:
+      context: layout/
+    command:
+      - usr/bin/boot.sh
+    volumes:
+        - ./layout/:/usr/src/app/
+    ports:
+      - "8000:8000"
+
+
+

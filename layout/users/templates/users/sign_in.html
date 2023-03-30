@@ -1,0 +1,25 @@
+{% load static %}
+<!--Встроенные теги и фильтры шаблонов в следующем патче уберу-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{% static 'vendor\css\style.css' %}">
+	</head>
+	<body>
+		<form class="box" action="{% url 'users:login' %}" method="post">
+			{% csrf_token %}
+			<a href="{% url 'users:login'%}" style="font-size: 25px; color: #FF7043;">Login</a><br>
+			<a href="{%url 'users:registration'%}" id="registation">Registration</a>
+			<div>
+				<label for="{{ form.username.id_for_label }}"></label>
+				{{ form.username }}
+			</div>
+				<!-- <input class="data" type="text" placeholder="Username"> -->
+				<!-- <input class="data" type="password" placeholder="Password"> -->
+			{{ form.password }}
+			<input type="submit" value="Login">
+		</form>
+	</body>
+</html>
