@@ -1,19 +1,12 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-#import classificator
 from users.models import User
 
-# Create your models here.
 
-#class AnnWeight(models.Model):
-#    id = models.AutoField(primary_key=True)
-#    #user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
-#    weight = models.CharField(max_length=256)
 
 
 class APIAnnGroups(models.Model):
     id = models.AutoField(primary_key=True)
-    #user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
     position_x = ArrayField(models.IntegerField(), default=list, blank=True)
     position_y = ArrayField(models.IntegerField(), default=list, blank=True)
     color = models.CharField(max_length=256, null=True)
@@ -26,11 +19,10 @@ class APIAnnGroups(models.Model):
 
 class APIAnnClasses(models.Model):
     id = models.AutoField(primary_key=True)
-    #user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
     position_x = ArrayField(models.IntegerField(), default=list, blank=True)
     position_y = ArrayField(models.IntegerField(), default=list, blank=True)
     color = models.CharField(max_length=256, null=True)
-    parent = models.ForeignKey("APIAnnLables", on_delete=models.PROTECT, blank=True, null=True, related_name="Child_lables")
+    parent = models.ForeignKey("APIAnnLables", on_delete=models.CASCADE, blank=True, null=True, related_name="Child_lables")
     title = models.CharField(max_length=256)
     code = models.CharField(max_length=256)
     lables = ArrayField(models.PositiveIntegerField(), default=list, blank=True)
@@ -43,7 +35,6 @@ class APIAnnClasses(models.Model):
 
 class APIAnnLables(models.Model):
     id = models.AutoField(primary_key=True)
-    #user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
     position_x = ArrayField(models.IntegerField(), default=list, blank=True)
     position_y = ArrayField(models.IntegerField(), default=list, blank=True)
     color = models.CharField(max_length=256, null=True)
@@ -59,8 +50,7 @@ class APIAnnLables(models.Model):
 class AnnotationObject(models.Model):
     annotation_id = models.PositiveIntegerField(default=1)
     Weight = models.CharField(max_length=256, blank=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
-    #Weight = models.ForeignKey(AnnWeight, on_delete=models.PROTECT, null=True, blank=True, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='annotations')
     Group = models.ManyToManyField(APIAnnGroups)
     Class = models.ManyToManyField(APIAnnClasses)
     Lables = models.ManyToManyField(APIAnnLables)

@@ -15,6 +15,5 @@ def set_annotation_id(sender, instance, **kwargs):
 @receiver(post_save, sender=User)
 def create_user_annotation(sender, instance, created, **kwargs):
     if created and not instance.is_staff:
-        AnnotationObject.objects.create(user=instance)
-
-    set_annotation_id(sender=AnnotationObject, instance=instance.annotationobject_ptr)
+        annotation_object = AnnotationObject.objects.create(user=instance)
+        set_annotation_id(sender=AnnotationObject, instance=annotation_object)
