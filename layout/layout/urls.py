@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from lablebox.views import index
-from classificator.views import ClassificatorAPIView
+#from lablebox.views import index
+from vueapp.views import index
+from classificator.views import UserObjectsView
+from annotation.views import AnnotationObject
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include("users.urls", namespace="users")),
     path('', index, name="index"),
-    path('api/v1/classificator', ClassificatorAPIView.as_view())
+    path('classificator/', include(("classificator.urls", "classificator"), namespace="classificator")),#ClassificatorAPIView.as_view())
+    path('ann/', include(("annotation.urls", "annotation"), namespace="annotation"))
 ]
+
