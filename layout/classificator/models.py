@@ -1,5 +1,4 @@
 from django.db import models
-#from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from users.models import User
 
@@ -17,7 +16,7 @@ class APIGroups(models.Model):
 
 class APIClasses(models.Model):
     id = models.AutoField(primary_key=True)
-    parent = models.ForeignKey("APILables", on_delete=models.PROTECT, blank=True, null=True, related_name="Child_lables")
+    parent = models.ForeignKey("APILables", on_delete=models.CASCADE, blank=True, null=True, related_name="Child_lables")
     title = models.CharField(max_length=256)
     code = models.CharField(max_length=256)
     lables = ArrayField(models.PositiveIntegerField(), default=list, blank=True)
@@ -39,9 +38,15 @@ class APILables(models.Model):
     
 
 class UserObjects(models.Model):
-    id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True, default=None)
+    classifier_id = models.PositiveIntegerField(default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default=None)
     groups = models.ManyToManyField(APIGroups)
     classes = models.ManyToManyField(APIClasses)
     labels = models.ManyToManyField(APILables)
+
+    class Meta:
+        unique_together = ('user', 'classifier_id')
+
+    def __str__(self):
+        return f'Classifier {self.classifier_id} for {self.user}'
     

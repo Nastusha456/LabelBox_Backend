@@ -32,27 +32,3 @@ class UserObjectsSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return super().to_representation(instance)
-
-# class CombinedSerializer(serializers.Serializer):
-#     Class = ClassSerializer(many=True)
-#     Groups = GroupSerializer(many=True)
-#     Labels = LabelSerializer(many=True)
-
-#     def to_representation(self, instance):
-#         Class = instance['Class']
-#         Groups = instance['Groups']
-#         Labels = instance['Lables']
-#         return {
-#             'Class': ClassSerializer(Class, many=True).data,
-#             'Groups': GroupSerializer(Groups, many=True).data,
-#             'Labels': LabelSerializer(Labels, many=True).data
-#         }
-
-# class CombinedAPIView(APIView):
-#     def get(self, request):
-#         Classes = APIClasses.objects.all()
-#         Groups = APIGroups.objects.all()
-
-#         serializer = CombinedSerializer(
-#             {"classes": Classes, "groups": Groups})
-#         return Response(serializer.data)
