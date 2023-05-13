@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = 'users.User'
+
 
 # Application definition
 
@@ -49,21 +51,49 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'layout.urls'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://10.17.17.112:5000",
-    "http://127.0.0.1:5000",
-    "http://localhost:8080",
-    ]
+
+CORS_ORIGIN_ALLOW_ALL = True # разрешить запросы со всех источников (только для тестирования локально)
+CORS_ALLOW_CREDENTIALS = True # разрешить отправлять данные аутентификации в запросах на другой домен
+CORS_ORIGIN_WHITELIST = [  # список доменов, с которых разрешено отправлять запросы
+    'http://localhost:8081',
+]
+   # [
+   # "http://192.168.129.30:8080",
+   # "http://127.0.0.1:8080",
+   # "http://localhost:8080",
+   # ]
+
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+'accept',
+'access-Control-Allow-Origin',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+]
 
 TEMPLATES = [
     {
@@ -144,5 +174,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#User
-AUTH_USER_MODEL = "users.User"
+# отмена добавления слеша в конце строки url
+APPEND_SLASH = False

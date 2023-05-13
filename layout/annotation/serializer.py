@@ -1,10 +1,6 @@
 from rest_framework import serializers
 from .models import APIAnnClasses, APIAnnGroups, APIAnnLables, AnnotationObject
 
-#class AnnWeightSerializer(serializers.ModelSerializer):
-#    class Meta:
-#        model = AnnWeight
-#        fields = ("id", "weight")
 
 class AnnClassSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,10 +21,9 @@ class AnnGroupSerializer(serializers.ModelSerializer):
 
 
 class AnnotationObjectSerializer(serializers.ModelSerializer):
-    #Weight = AnnWeightSerializer()
     Group = AnnGroupSerializer(many=True)
     Class = AnnClassSerializer(many=True)
-    Lables = AnnLabelSerializer(many = True)
+    Lables = AnnLabelSerializer(many=True)
 
     class Meta:
         model = AnnotationObject
@@ -36,4 +31,3 @@ class AnnotationObjectSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return super().to_representation(instance)
-    

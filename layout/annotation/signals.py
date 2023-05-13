@@ -4,11 +4,13 @@ from annotation.models import AnnotationObject
 from django.db.models import Max
 from users.models import User
 
+
 @receiver(pre_save, sender=AnnotationObject)
 def set_annotation_id(sender, instance, **kwargs):
     if not instance.annotation_id:
         # Если у аннотации нет ID, то ищем максимальный среди уже созданных
-        max_id = AnnotationObject.objects.filter(user=instance.user).aggregate(max_id=Max('annotation_id'))['max_id']
+        max_id = AnnotationObject.objects.filter(user=instance.user).aggregate(
+            max_id=Max('annotation_id'))['max_id']
         instance.annotation_id = 1 if max_id is None else max_id + 1
 
 

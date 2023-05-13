@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include("users.urls", namespace="users")),
     path('', index, name="index"),
-    path('classificator/', include(("classificator.urls", "classificator"), namespace="classificator")),#ClassificatorAPIView.as_view())
+    path('classificator/', include(("classificator.urls", "classificator"), namespace="classificator")),
     path('ann/', include(("annotation.urls", "annotation"), namespace="annotation"))
 ]
 

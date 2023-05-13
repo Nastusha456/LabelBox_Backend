@@ -3,8 +3,6 @@ from django.contrib.postgres.fields import ArrayField
 from users.models import User
 
 
-
-
 class APIAnnGroups(models.Model):
     id = models.AutoField(primary_key=True)
     position_x = ArrayField(models.IntegerField(), default=list, blank=True)
@@ -15,22 +13,24 @@ class APIAnnGroups(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 
 class APIAnnClasses(models.Model):
     id = models.AutoField(primary_key=True)
     position_x = ArrayField(models.IntegerField(), default=list, blank=True)
     position_y = ArrayField(models.IntegerField(), default=list, blank=True)
     color = models.CharField(max_length=256, null=True)
-    parent = models.ForeignKey("APIAnnLables", on_delete=models.CASCADE, blank=True, null=True, related_name="Child_lables")
+    parent = models.ForeignKey("APIAnnLables", on_delete=models.CASCADE,
+                               blank=True, null=True, related_name="Child_lables")
     title = models.CharField(max_length=256)
     code = models.CharField(max_length=256)
-    lables = ArrayField(models.PositiveIntegerField(), default=list, blank=True)
-    groups = ArrayField(models.PositiveIntegerField(), default=list, blank=True)
+    lables = ArrayField(models.PositiveIntegerField(),
+                        default=list, blank=True)
+    groups = ArrayField(models.PositiveIntegerField(),
+                        default=list, blank=True)
 
     def __str__(self):
         return self.title
-    
 
 
 class APIAnnLables(models.Model):
@@ -50,7 +50,8 @@ class APIAnnLables(models.Model):
 class AnnotationObject(models.Model):
     annotation_id = models.PositiveIntegerField(default=1)
     Weight = models.CharField(max_length=256, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='annotations')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,
+                             blank=True, default=None, related_name='annotations')
     Group = models.ManyToManyField(APIAnnGroups)
     Class = models.ManyToManyField(APIAnnClasses)
     Lables = models.ManyToManyField(APIAnnLables)
