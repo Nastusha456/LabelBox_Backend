@@ -80,3 +80,5 @@ def change(request):
 
     # password for user_1 n4j5h2jk3b54jkh
     # password for user_2 54jk1h2jhk4vt / changed: changed_name 4h5j2j5jg2b5bj
+    # test_user hv234hjvtfsn
+    # test_user_2 hv234hjvtfsn
