@@ -12,7 +12,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = APIClasses
-        fields = ("id", "title",  "code", "lables", "groups")
+        fields = ("id", "parent", "title",  "code", "lables", "groups")
 
 
 class LabelSerializer(serializers.ModelSerializer):
@@ -24,11 +24,11 @@ class LabelSerializer(serializers.ModelSerializer):
 class UserObjectsSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
     classes = ClassSerializer(many=True)
-    labels = LabelSerializer(many=True)
+    lables = LabelSerializer(many=True)
 
     class Meta:
         model = UserObjects
-        fields = ("user", "groups", "classes", "labels")
+        fields = ("user", "groups", "classes", "lables")
 
     #def to_representation(self, instance):
     #    return super().to_representation(instance)

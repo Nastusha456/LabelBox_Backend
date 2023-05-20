@@ -14,7 +14,7 @@ class APIGroups(models.Model):
 
 class APIClasses(models.Model):
     id = models.AutoField(primary_key=True)
-    parent = models.ForeignKey("APILables", on_delete=models.CASCADE, blank=True, null=True, related_name="Child_lables")
+    parent = models.PositiveIntegerField(blank=True, null=True)#models.ForeignKey("APILables", on_delete=models.CASCADE, blank=True, null=True, related_name="Child_lables")
     title = models.CharField(max_length=256)
     code = models.CharField(max_length=256)
     lables = ArrayField(models.PositiveIntegerField(), default=list, blank=True)
@@ -40,7 +40,7 @@ class UserObjects(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default=None)
     groups = models.ManyToManyField(APIGroups)
     classes = models.ManyToManyField(APIClasses)
-    labels = models.ManyToManyField(APILables)
+    lables = models.ManyToManyField(APILables)
 
     class Meta:
         unique_together = ('user', 'classifier_id')
